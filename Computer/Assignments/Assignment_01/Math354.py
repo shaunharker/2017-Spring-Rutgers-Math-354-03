@@ -7,7 +7,7 @@ from IPython.display import display, Math, Latex, Markdown
 import numpy as np
 from numpy import matlib
 from numpy import transpose as FloatTranspose
-Matrix = lambda data : np.matrix(data, 'float64')
+FloatMatrix = lambda data : np.matrix(data, 'float64')
 
 import sympy
 from sympy import Rational
@@ -19,7 +19,7 @@ def Transpose(M):
     """
     Given a matrix M, return the transpose of M
     """
-    if isinstance(M, type(Matrix([[1]]))):
+    if isinstance(M, type(FloatMatrix([[1]]))):
         return FloatTranspose(M)
     elif isinstance(M, type(RationalMatrix([[1]]))):
         return RationalMatrix(RationalTranspose(M))
@@ -31,7 +31,7 @@ def MatrixToLatex(M):
     Obtain LaTeX string for matrix (for typesetting)
     """
     latex_string = ''
-    if isinstance(M, type(Matrix([[1]]))):
+    if isinstance(M, type(FloatMatrix([[1]]))):
         if len(M.shape) > 2:
             raise ValueError('bmatrix can at most display two dimensions')
         lines = str(M).replace('[', '').replace(']', '').splitlines()
@@ -65,7 +65,7 @@ def DisplayText(text):
     """
     display(Markdown(text))
 
-def Identity(n):
+def FloatIdentity(n):
     """
     Return an identity Matrix of size nxn
     """
@@ -106,7 +106,7 @@ def AugmentedMatrix(A):
     """
     m,n = A.shape
     M = A.copy()
-    if isinstance(M, type(Matrix([[1]]))):
+    if isinstance(M, type(FloatMatrix([[1]]))):
         return np.hstack((M, Identity(m)))
     elif isinstance(M, type(RationalMatrix([[1]]))):
         return M.row_join(RationalIdentity(m))
@@ -239,3 +239,6 @@ def Solve(A, b):
         x += v
         c -= w
     return x
+
+Matrix = RationalMatrix
+Identity = RationalIdentity
