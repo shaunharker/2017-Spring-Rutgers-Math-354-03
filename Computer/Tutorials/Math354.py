@@ -15,6 +15,8 @@ from sympy import Matrix as RationalMatrix
 from sympy import latex
 from sympy.functions import transpose as RationalTranspose
 
+sympy.Matrix.copy = lambda x : x[:,:]   # for compatibility
+
 def Transpose(M):
     """
     Given a matrix M, return the transpose of M
